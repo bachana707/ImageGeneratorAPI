@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    public Image centralImage;
     public TMP_InputField promptInput;
     public string promptTxt;
     [Header("Buttons")] public Button sendRequestBtn;

@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4875445e285c4442b48ec729c39e8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  centralImage: {fileID: 1264492572}
   promptInput: {fileID: 1367089576}
   promptTxt: 
   sendRequestBtn: {fileID: 77487834}
