@@ -11,6 +11,8 @@ public class UIManager : Singleton<UIManager>
     public string promptTxt;
     [Header("Buttons")] public Button sendRequestBtn;
     public Button img2ImgRequest;
+    public Button saveButton;
+    public Button clearButton;
     private void Start()
     {
         Init();
@@ -21,6 +23,8 @@ public class UIManager : Singleton<UIManager>
         promptInput.onValueChanged.AddListener(delegate {OnPromptValueChange(); });
         sendRequestBtn.onClick.AddListener(OnSendRequestBtnClick);
         img2ImgRequest.onClick.AddListener(OnImg2ImgRequestBtnClick);
+        saveButton.onClick.AddListener(OnSaveBtnClick);
+        clearButton.onClick.AddListener(OnClearButtonClick);
     }
 
     public void OnSendRequestBtnClick()
@@ -29,6 +33,16 @@ public class UIManager : Singleton<UIManager>
     }
 
     public void OnImg2ImgRequestBtnClick()
+    {
+        
+    }
+
+    public void OnSaveBtnClick()
+    {
+        
+    }
+
+    public void OnClearButtonClick()
     {
         
     }
