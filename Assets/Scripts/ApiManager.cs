@@ -114,7 +114,7 @@ public class ApiManager : Singleton<ApiManager>
                 seed_resize_from_w = -1,
                 batch_size = 1,
                 n_iter = 1,
-                steps = 1,
+                steps = 20,
                 cfg_scale = 7,
                 width = 512,
                 height = 512,
@@ -140,6 +140,7 @@ public class ApiManager : Singleton<ApiManager>
 
     public void ConvertFromBase(string base64Image)
     {
+        Debug.Log(base64Image);
         byte[] imageBytes = Convert.FromBase64String(base64Image);
         Texture2D tex = new Texture2D(512, 512);
         tex.LoadImage(imageBytes);
