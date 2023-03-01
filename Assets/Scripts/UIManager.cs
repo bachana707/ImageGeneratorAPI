@@ -39,10 +39,11 @@ public class UIManager : Singleton<UIManager>
         }
         AllButtonInteractable(false);
         StartLoading();
-        ApiManager.Instance.SendRequestTxtToImg(promptTxt,OnGetGeneratedImage);
+        ApiManager.Instance.SendRequestTxt2Img(promptTxt,OnGetGeneratedImage);
         
     }
 
+    
     private void OnGetGeneratedImage()
     {
         StopLoading();
