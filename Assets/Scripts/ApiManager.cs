@@ -2,17 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using MM.Msg;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class ApiManager : Singleton<ApiManager>
 {
     public string bearer;
+
+
+    [HideInInspector] public string lastDownloadedBase64;
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Txt2ImageRequest : BaseRequest
@@ -97,8 +96,7 @@ public class ApiManager : Singleton<ApiManager>
         public string info { get; set; }
     }
 
-
-    public void Start()
+    public void SendRequestTxtToImg(string txt, Action callback)
     {
         NetCenter.Instance.Send<Txt2ImageResponse>(new Txt2ImageRequest()
             {
@@ -106,7 +104,7 @@ public class ApiManager : Singleton<ApiManager>
                 denoising_strength = 0,
                 firstphase_height = 0,
                 firstphase_width = 0,
-                prompt = "dog in space",
+                prompt = txt,
                 seed = -1,
                 subseed = -1,
                 subseed_strength = 0,
@@ -128,18 +126,17 @@ public class ApiManager : Singleton<ApiManager>
                 s_noise = 1,
                 sampler_index = "Euler a"
             },
-            msg => {
+            msg =>
+            {
                 var response = msg as Txt2ImageResponse;
+                callback?.Invoke();
                 ConvertFromBase(response.images[0]);
-               
-            }, e => {
-                Debug.Log(e);
-            });
+            }, e => { Debug.Log(e); });
     }
-
 
     public void ConvertFromBase(string base64Image)
     {
+        lastDownloadedBase64 = base64Image;
         Debug.Log(base64Image);
         byte[] imageBytes = Convert.FromBase64String(base64Image);
         Texture2D tex = new Texture2D(512, 512);

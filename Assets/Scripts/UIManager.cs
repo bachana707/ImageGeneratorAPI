@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using Unity.Mathematics;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -14,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     public Button img2ImgRequest;
     public Button saveButton;
     public Button clearButton;
+    public GameObject loading;
     private void Start()
     {
         Init();
@@ -30,9 +33,42 @@ public class UIManager : Singleton<UIManager>
 
     public void OnSendRequestBtnClick()
     {
+        if (promptTxt.Length == 0)
+        {
+            return;
+        }
+        AllButtonInteractable(false);
+        StartLoading();
+        ApiManager.Instance.SendRequestTxtToImg(promptTxt,OnGetGeneratedImage);
         
     }
 
+    private void OnGetGeneratedImage()
+    {
+        StopLoading();
+        AllButtonInteractable(true);
+    }
+    public void AllButtonInteractable(bool active)
+    {
+        //todo
+        sendRequestBtn.interactable = active;
+        promptInput.interactable = active;
+        img2ImgRequest.interactable = active;
+        saveButton.interactable = active;
+    }
+
+    public void StartLoading()
+    {
+        loading.SetActive(true);
+        loading.transform.DORotate(new Vector3(0, 0, -360f), 1f, RotateMode.FastBeyond360).SetLoops(-1);
+    }
+
+    public void StopLoading()
+    {
+        loading.transform.DOKill();
+        loading.transform.rotation = quaternion.identity;
+        loading.SetActive(false);
+    }
     public void OnImg2ImgRequestBtnClick()
     {
         
