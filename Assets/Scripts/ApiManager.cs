@@ -11,6 +11,11 @@ public class ApiManager : Singleton<ApiManager>
     public string bearer;
 
 
+    public SliderController samplingStep;
+    public SliderController width;
+    public SliderController height;
+    public SliderController cfgScale;
+
     [HideInInspector] public string lastDownloadedBase64;
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -29,10 +34,10 @@ public class ApiManager : Singleton<ApiManager>
         public int seed_resize_from_w { get; set; }
         public int batch_size { get; set; }
         public int n_iter { get; set; }
-        public int steps { get; set; }
-        public int cfg_scale { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
+        public float steps { get; set; }
+        public float cfg_scale { get; set; }
+        public float width { get; set; }
+        public float height { get; set; }
         public bool restore_faces { get; set; }
         public bool tiling { get; set; }
         public string negative_prompt { get; set; }
@@ -254,10 +259,10 @@ public class ApiManager : Singleton<ApiManager>
                 seed_resize_from_w = -1,
                 batch_size = 1,
                 n_iter = 1,
-                steps = 20,
-                cfg_scale = 7,
-                width = 512,
-                height = 512,
+                steps = samplingStep.SliderValue,
+                cfg_scale = cfgScale.SliderValue,
+                width = width.SliderValue,
+                height = height.SliderValue,
                 restore_faces = false,
                 tiling = false,
                 negative_prompt = "",
