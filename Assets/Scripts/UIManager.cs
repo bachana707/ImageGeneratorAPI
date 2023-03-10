@@ -10,8 +10,6 @@ using Unity.Mathematics;
 public class UIManager : Singleton<UIManager>
 {
     public Image centralImage;
-    public TMP_InputField promptInput;
-    public string promptTxt;
     [Header("Buttons")] public Button sendRequestBtn;
     public Button img2ImgRequest;
     public Button saveButton;
@@ -24,7 +22,6 @@ public class UIManager : Singleton<UIManager>
 
     private void Init()
     {
-        promptInput.onValueChanged.AddListener(delegate {OnPromptValueChange(); });
         sendRequestBtn.onClick.AddListener(OnSendRequestBtnClick);
         img2ImgRequest.onClick.AddListener(OnImg2ImgRequestBtnClick);
         saveButton.onClick.AddListener(OnSaveBtnClick);
@@ -33,13 +30,9 @@ public class UIManager : Singleton<UIManager>
 
     public void OnSendRequestBtnClick()
     {
-        if (promptTxt.Length == 0)
-        {
-            return;
-        }
         AllButtonInteractable(false);
         StartLoading();
-        ApiManager.Instance.SendRequestTxt2Img(promptTxt,OnGetGeneratedImage);
+        ApiManager.Instance.SendRequestTxt2Img(OnGetGeneratedImage);
         
     }
 
@@ -53,7 +46,6 @@ public class UIManager : Singleton<UIManager>
     {
         //todo
         sendRequestBtn.interactable = active;
-        promptInput.interactable = active;
         img2ImgRequest.interactable = active;
         saveButton.interactable = active;
     }
@@ -83,9 +75,5 @@ public class UIManager : Singleton<UIManager>
     public void OnClearButtonClick()
     {
         
-    }
-    private void OnPromptValueChange()
-    {
-        promptTxt = promptInput.text;
     }
 }

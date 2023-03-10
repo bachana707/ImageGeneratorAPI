@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MM.Msg;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ using UnityEngine.UI;
 public class ApiManager : Singleton<ApiManager>
 {
     public string bearer;
+    public TMP_InputField promptInput;
+    public TMP_InputField NegativepromptInput;
 
 
     public SliderController samplingStep;
@@ -17,6 +20,28 @@ public class ApiManager : Singleton<ApiManager>
     public SliderController height;
     public SliderController cfgScale;
     public Toggle enable_hr;
+    public TMP_InputField denoising_strength;
+    public TMP_InputField firstphase_height;
+    public TMP_InputField firstphase_width;
+    public TMP_InputField seed;
+    public TMP_InputField subseed;
+    public TMP_InputField subseed_strength;
+    public TMP_InputField seed_resize_from_h;
+    public TMP_InputField seed_resize_from_w;
+    public TMP_InputField batch_size;
+    public TMP_InputField n_iter;
+    public Toggle restore_faces;
+    public Toggle tiling;
+    public TMP_InputField eta;
+    public TMP_InputField s_churn;
+    public TMP_InputField s_tmax;
+    public TMP_InputField s_tmin;
+    public TMP_InputField s_noise;
+    public TMP_InputField sampler_index;
+
+//    negative_prompt = "",//
+
+
     [HideInInspector] public string lastDownloadedBase64;
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -244,35 +269,35 @@ public class ApiManager : Singleton<ApiManager>
             }, e => { Debug.Log(e); });
     }
 
-    public void SendRequestTxt2Img(string txt, Action callback)
+    public void SendRequestTxt2Img(Action callback)
     {
         NetCenter.Instance.Send<Txt2ImageResponse>(new Txt2ImageRequest()
             {
                 enable_hr = enable_hr.isOn,
-                denoising_strength = 0,//
-                firstphase_height = 0,//
-                firstphase_width = 0,//
-                prompt = txt,
-                seed = -1,//
-                subseed = -1,//
-                subseed_strength = 0,//
-                seed_resize_from_h = -1,//
-                seed_resize_from_w = -1,//
-                batch_size = 1,//
-                n_iter = 1,//
+                denoising_strength = Int32.Parse(denoising_strength.text),
+                firstphase_height = Int32.Parse(firstphase_height.text),
+                firstphase_width = Int32.Parse(firstphase_width.text),
+                prompt = promptInput.text,
+                seed = Int32.Parse(seed.text),
+                subseed = Int32.Parse(subseed.text),
+                subseed_strength = Int32.Parse(subseed_strength.text),
+                seed_resize_from_h = Int32.Parse(seed_resize_from_h.text),
+                seed_resize_from_w = Int32.Parse(seed_resize_from_w.text),
+                batch_size = Int32.Parse(batch_size.text),
+                n_iter = Int32.Parse(n_iter.text),
                 steps = samplingStep.SliderValue,
                 cfg_scale = cfgScale.SliderValue,
                 width = width.SliderValue,
                 height = height.SliderValue,
-                restore_faces = false,//
-                tiling = false,//
-                negative_prompt = "",//
-                eta = 0,//
-                s_churn = 0,//
-                s_tmax = 0,//
-                s_tmin = 0,//
-                s_noise = 1,
-                sampler_index = "Euler a"//
+                restore_faces = restore_faces.isOn,
+                tiling = tiling.isOn,
+                negative_prompt = NegativepromptInput.text,
+                eta = Int32.Parse(eta.text),
+                s_churn = Int32.Parse(s_churn.text),
+                s_tmax = Int32.Parse(s_tmax.text),
+                s_tmin = Int32.Parse(s_tmin.text),
+                s_noise = Int32.Parse(s_noise.text),
+                sampler_index = sampler_index.text
             },
             msg =>
             {
