@@ -5,6 +5,7 @@ using System.IO;
 using MM.Msg;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ApiManager : Singleton<ApiManager>
 {
@@ -15,7 +16,7 @@ public class ApiManager : Singleton<ApiManager>
     public SliderController width;
     public SliderController height;
     public SliderController cfgScale;
-
+    public Toggle enable_hr;
     [HideInInspector] public string lastDownloadedBase64;
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -49,7 +50,7 @@ public class ApiManager : Singleton<ApiManager>
         public string sampler_index { get; set; }
 
         public override string PostUrl() =>
-            "http://3.20.221.132:8080/sdapi/v1/txt2img";
+            "http://3.137.201.231:8080/sdapi/v1/txt2img";
     }
 
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -141,7 +142,7 @@ public class ApiManager : Singleton<ApiManager>
         public bool include_init_images { get; set; }
 
         public override string PostUrl() =>
-            "http://3.20.221.132:8080/sdapi/v1/img2img";
+            "http://3.137.201.231:8080/sdapi/v1/img2img";
     }
 
 
@@ -237,7 +238,7 @@ public class ApiManager : Singleton<ApiManager>
             },
             msg =>
             {
-                var response = msg as Txt2ImageResponse;
+                var response = msg as Image2ImageResponse;
                 callback?.Invoke();
                 ConvertFromBase(response.images[0]);
             }, e => { Debug.Log(e); });
@@ -247,25 +248,25 @@ public class ApiManager : Singleton<ApiManager>
     {
         NetCenter.Instance.Send<Txt2ImageResponse>(new Txt2ImageRequest()
             {
-                enable_hr = false,
-                denoising_strength = 0,
-                firstphase_height = 0,
-                firstphase_width = 0,
+                enable_hr = enable_hr.isOn,
+                denoising_strength = 0,//
+                firstphase_height = 0,//
+                firstphase_width = 0,//
                 prompt = txt,
-                seed = -1,
-                subseed = -1,
-                subseed_strength = 0,
-                seed_resize_from_h = -1,
-                seed_resize_from_w = -1,
-                batch_size = 1,
-                n_iter = 1,
+                seed = -1,//
+                subseed = -1,//
+                subseed_strength = 0,//
+                seed_resize_from_h = -1,//
+                seed_resize_from_w = -1,//
+                batch_size = 1,//
+                n_iter = 1,//
                 steps = samplingStep.SliderValue,
                 cfg_scale = cfgScale.SliderValue,
                 width = width.SliderValue,
                 height = height.SliderValue,
-                restore_faces = false,
-                tiling = false,
-                negative_prompt = "",
+                restore_faces = false,//
+                tiling = false,//
+                negative_prompt = "",//
                 eta = 0,
                 s_churn = 0,
                 s_tmax = 0,
