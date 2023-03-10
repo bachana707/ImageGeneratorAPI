@@ -38,9 +38,7 @@ public class ApiManager : Singleton<ApiManager>
     public TMP_InputField s_tmin;
     public TMP_InputField s_noise;
     public TMP_InputField sampler_index;
-
-//    negative_prompt = "",//
-
+    
 
     [HideInInspector] public string lastDownloadedBase64;
 
