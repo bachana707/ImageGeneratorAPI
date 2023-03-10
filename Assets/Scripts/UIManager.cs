@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Unity.Mathematics;
+using UnityEditor;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -15,6 +17,7 @@ public class UIManager : Singleton<UIManager>
     public Button saveButton;
     public Button clearButton;
     public GameObject loading;
+
     private void Start()
     {
         Init();
@@ -33,15 +36,15 @@ public class UIManager : Singleton<UIManager>
         AllButtonInteractable(false);
         StartLoading();
         ApiManager.Instance.SendRequestTxt2Img(OnGetGeneratedImage);
-        
     }
 
-    
+
     private void OnGetGeneratedImage()
     {
         StopLoading();
         AllButtonInteractable(true);
     }
+
     public void AllButtonInteractable(bool active)
     {
         //todo
@@ -62,18 +65,24 @@ public class UIManager : Singleton<UIManager>
         loading.transform.rotation = quaternion.identity;
         loading.SetActive(false);
     }
+
     public void OnImg2ImgRequestBtnClick()
     {
-        
     }
 
     public void OnSaveBtnClick()
     {
-        
+        Texture2D texture = (Texture2D)centralImage.sprite.texture;
+        byte[] bytes = texture.EncodeToPNG();
+        string path = EditorUtility.SaveFilePanel("Save file", "", ApiManager.Instance.promptInput.text, "PNG");
+        if (path.Length != 0)
+        {
+            File.WriteAllBytes(path, bytes);
+            Debug.Log("File saved at: " + path);
+        }
     }
 
     public void OnClearButtonClick()
     {
-        
     }
 }
