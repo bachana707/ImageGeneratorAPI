@@ -319,22 +319,22 @@ public class ApiManager : Singleton<ApiManager>
 
     public void SaveImage(Sprite sprite)
     {
-        string proj_path = Application.dataPath;
-        var abs_path = Path.Combine(Application.dataPath, proj_path);
-        proj_path = Path.Combine("Assets", proj_path);
-
-        Directory.CreateDirectory(Path.GetDirectoryName(abs_path));
-        File.WriteAllBytes(abs_path, ImageConversion.EncodeToPNG(sprite.texture));
-
-        AssetDatabase.Refresh();
-
-        var ti = AssetImporter.GetAtPath(proj_path) as TextureImporter;
-        ti.spritePixelsPerUnit = sprite.pixelsPerUnit;
-        ti.mipmapEnabled = false;
-        ti.textureType = TextureImporterType.Sprite;
-
-        EditorUtility.SetDirty(ti);
-        ti.SaveAndReimport();
+        // string proj_path = Application.dataPath;
+        // var abs_path = Path.Combine(Application.dataPath, proj_path);
+        // proj_path = Path.Combine("Assets", proj_path);
+        //
+        // Directory.CreateDirectory(Path.GetDirectoryName(abs_path));
+        // File.WriteAllBytes(abs_path, ImageConversion.EncodeToPNG(sprite.texture));
+        //
+        // AssetDatabase.Refresh();
+        //
+        // var ti = AssetImporter.GetAtPath(proj_path) as TextureImporter;
+        // ti.spritePixelsPerUnit = sprite.pixelsPerUnit;
+        // ti.mipmapEnabled = false;
+        // ti.textureType = TextureImporterType.Sprite;
+        //
+        // EditorUtility.SetDirty(ti);
+        // ti.SaveAndReimport();
 
         //return AssetDatabase.LoadAssetAtPath<Sprite>(proj_path);  //Tu shenaxvis mere amogeba dagvchirda
     }

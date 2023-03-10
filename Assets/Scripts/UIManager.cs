@@ -2,12 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using SFB;
 using Unity.Mathematics;
-using UnityEditor;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -74,7 +73,7 @@ public class UIManager : Singleton<UIManager>
     {
         Texture2D texture = (Texture2D)centralImage.sprite.texture;
         byte[] bytes = texture.EncodeToPNG();
-        string path = EditorUtility.SaveFilePanel("Save file", "", ApiManager.Instance.promptInput.text, "PNG");
+        string path = StandaloneFileBrowser.SaveFilePanel("Save file", "", ApiManager.Instance.promptInput.text, "PNG");
         if (path.Length != 0)
         {
             File.WriteAllBytes(path, bytes);
