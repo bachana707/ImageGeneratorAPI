@@ -267,12 +267,12 @@ public class ApiManager : Singleton<ApiManager>
                 restore_faces = false,//
                 tiling = false,//
                 negative_prompt = "",//
-                eta = 0,
-                s_churn = 0,
-                s_tmax = 0,
-                s_tmin = 0,
+                eta = 0,//
+                s_churn = 0,//
+                s_tmax = 0,//
+                s_tmin = 0,//
                 s_noise = 1,
-                sampler_index = "Euler a"
+                sampler_index = "Euler a"//
             },
             msg =>
             {
