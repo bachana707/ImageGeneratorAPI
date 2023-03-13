@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using SFB;
 using Unity.Mathematics;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -16,6 +17,11 @@ public class UIManager : Singleton<UIManager>
     public Button saveButton;
     public Button clearButton;
     public GameObject loading;
+
+    public void OpenScene(int index)
+    {
+        SceneManager.LoadScene(index, LoadSceneMode.Single);
+    }
 
     private void Start()
     {
@@ -34,7 +40,7 @@ public class UIManager : Singleton<UIManager>
     {
         AllButtonInteractable(false);
         StartLoading();
-        ApiManager.Instance.SendRequestTxt2Img(OnGetGeneratedImage);
+        ApiManagerTxt2Img.Instance.SendRequestTxt2Img(OnGetGeneratedImage);
     }
 
 
@@ -73,7 +79,8 @@ public class UIManager : Singleton<UIManager>
     {
         Texture2D texture = (Texture2D)centralImage.sprite.texture;
         byte[] bytes = texture.EncodeToPNG();
-        string path = StandaloneFileBrowser.SaveFilePanel("Save file", "", ApiManager.Instance.promptInput.text, "PNG");
+        string path =
+            StandaloneFileBrowser.SaveFilePanel("Save file", "", ApiManagerTxt2Img.Instance.promptInput.text, "PNG");
         if (path.Length != 0)
         {
             File.WriteAllBytes(path, bytes);

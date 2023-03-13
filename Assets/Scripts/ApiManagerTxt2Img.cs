@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ApiManager : Singleton<ApiManager>
+public class ApiManagerTxt2Img : Singleton<ApiManagerTxt2Img>
 {
     public string bearer;
     public TMP_InputField promptInput;
